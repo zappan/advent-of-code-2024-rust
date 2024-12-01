@@ -1,0 +1,11 @@
+*.bak
+*.log
+*.gitignore
+!.gitignore
+
+challenges/
+input/
+
+Cargo.lock
+target/
+
