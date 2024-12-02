@@ -45,6 +45,6 @@ fn day2() {
   println!("[Day02::Part1] Safe Reports Count => {safe_reports_count}");
   println!("[Day02::Part2] Dampened Safe Reports Count => {dampened_safe_reports_count}");
 
-  day2::benchmarks::run(_test_input, bench_spacer);
   day2::benchmarks::run(input, bench_spacer);
+  day2::benchmarks::run(_test_input, bench_spacer);
 }
