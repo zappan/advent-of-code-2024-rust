@@ -1,11 +1,13 @@
 use aoc_2024::day1;
+use aoc_2024::day2;
 
 fn main() {
+  day2();
   day1();
 }
 
 fn spacer() {
-  println!("----------------------------------------------------");
+  println!("====================================================");
 }
 
 fn bench_spacer() {
@@ -24,4 +26,20 @@ fn day1() {
   println!("[Day01::Part2] Similarity Score => {}", similarity_score);
 
   day1::benchmarks(input, bench_spacer);
+}
+
+fn day2() {
+  spacer();
+
+  let _test_input = &day2::_read_test_input_file() as &str;
+  let input = &day2::read_input_file() as &str;
+
+  let safe_reports_count = day2::part1(input);
+  let dampened_safe_reports_count = day2::part2(input);
+
+  println!("[Day02::Part1] Safe Reports Count => {safe_reports_count}");
+  println!("[Day02::Part2] Dampened Safe Reports Count => {dampened_safe_reports_count}");
+
+  day2::benchmarks::run(_test_input, bench_spacer);
+  day2::benchmarks::run(input, bench_spacer);
 }
