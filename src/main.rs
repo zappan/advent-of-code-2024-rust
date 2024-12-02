@@ -28,7 +28,8 @@ fn day1() {
   println!("[Day01::Part1] Total Distance => {}", total_dist);
   println!("[Day01::Part2] Similarity Score => {}", similarity_score);
 
-  day1::benchmarks(input, bench_spacer);
+  day1::benchmarks::run(input, bench_spacer);
+  day1::benchmarks::run(_test_input, bench_spacer);
 }
 
 fn day2() {
