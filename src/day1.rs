@@ -23,7 +23,7 @@ fn parse_input(input: &str) -> (Vec<u32>, Vec<u32>) {
     .filter(|x| !x.is_empty())
     .map(|line| {
       line
-        .split("   ")
+        .split_whitespace()
         .map(|x| x.parse::<u32>().unwrap())
         .collect::<Vec<_>>()
     })
@@ -41,9 +41,10 @@ fn calc_total_distance(mut list1: Vec<u32>, mut list2: Vec<u32>) -> u32 {
   let range_iter = 0..list1.len();
   let total_dist = range_iter.fold(0, |acc, i| {
     let (i1, i2) = (list1[i], list2[i]);
-    let dist = match i1 > i2 {
-      true => i1 - i2,
-      false => i2 - i1,
+    let dist = match i1.cmp(&i2) {
+      std::cmp::Ordering::Greater => i1 - i2,
+      std::cmp::Ordering::Less => i2 - i1,
+      std::cmp::Ordering::Equal => 0,
     };
     // println!("{}: {} {} {}", i, list1[i], list2[i], dist);
     return acc + dist;
