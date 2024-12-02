@@ -1,3 +1,5 @@
+use crate::util::io::{bench_spacer, Env};
+
 use super::*;
 
 #[derive(Debug)]
@@ -20,8 +22,8 @@ fn run_benchmark(input: &str, fn_impl: BenchImpl) {
   println!("[{fn_impl:#?}] Elapsed {elapsed:.2?}; Result: {result}");
 }
 
-pub fn run(input: &str, bench_spacer: fn()) {
-  bench_spacer();
+pub fn run(input: &str, env: Env) {
+  bench_spacer(env);
   run_benchmark(input, BenchImpl::Part1Std);
   run_benchmark(input, BenchImpl::Part2Std);
   run_benchmark(input, BenchImpl::Part2Fast);

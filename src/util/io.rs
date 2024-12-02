@@ -1,8 +1,24 @@
+use std::fmt;
 use std::fs;
 
-enum Env {
+#[derive(Debug)]
+pub enum Env {
   Run,
   Test,
+}
+
+impl fmt::Display for Env {
+  fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    f.write_str(&format!("{:?}", *self))
+  }
+}
+
+pub fn spacer() {
+  println!("====================================================");
+}
+
+pub fn bench_spacer(env: Env) {
+  println!("----------------- Benchmarks {:<4} ------------------", env.to_string());
 }
 
 fn get_input_file_name(day: u8, env: Env) -> String {
