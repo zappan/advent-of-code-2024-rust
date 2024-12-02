@@ -1,19 +1,4 @@
-use std::fs;
-
 pub mod benchmarks;
-
-const INPUT_FILE: &str = "input/day02.txt";
-const TEST_INPUT_FILE: &str = "input/test/day02.txt";
-
-pub fn read_input_file() -> String {
-  let file_contents = fs::read_to_string(INPUT_FILE).unwrap();
-  return file_contents;
-}
-
-pub fn _read_test_input_file() -> String {
-  let file_contents = fs::read_to_string(TEST_INPUT_FILE).unwrap();
-  return file_contents;
-}
 
 fn parse_input(input: &str) -> Vec<Vec<u8>> {
   let parsed_input = input

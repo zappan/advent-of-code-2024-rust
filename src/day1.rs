@@ -1,18 +1,4 @@
 use std::collections::HashMap;
-use std::fs;
-
-const INPUT_FILE: &str = "input/day01.txt";
-
-pub fn parse_input_file() -> String {
-  let file_contents = fs::read_to_string(INPUT_FILE).unwrap();
-  return file_contents;
-}
-
-fn _test_input() -> (Vec<u32>, Vec<u32>) {
-  let list1 = [3, 4, 2, 1, 3, 3].to_vec();
-  let list2 = [4, 3, 5, 3, 9, 3].to_vec();
-  (list1, list2)
-}
 
 fn parse_input(input: &str) -> (Vec<u32>, Vec<u32>) {
   let mut list1: Vec<u32> = Vec::new();
@@ -79,13 +65,11 @@ fn calc_similarity_score_fast(list1: &Vec<u32>, list2: &Vec<u32>) -> u32 {
 }
 
 pub fn part1(input: &str) -> u32 {
-  // let (list1, list2) = _test_input();
   let (list1, list2) = parse_input(input);
   calc_total_distance(list1, list2)
 }
 
 pub fn part2(input: &str) -> u32 {
-  // let (list1, list2) = _test_input();
   let (list1, list2) = parse_input(input);
   calc_similarity_score_fast(&list1, &list2)
 }

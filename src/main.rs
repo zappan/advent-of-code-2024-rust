@@ -1,5 +1,6 @@
 use aoc_2024::day1;
 use aoc_2024::day2;
+use aoc_2024::util::io;
 
 fn main() {
   day2();
@@ -17,7 +18,9 @@ fn bench_spacer() {
 fn day1() {
   spacer();
 
-  let input = &day1::parse_input_file() as &str;
+  let day: u8 = 1;
+  let _test_input = &io::read_test_input_file(day) as &str;
+  let input = &io::read_input_file(day) as &str;
 
   let total_dist = day1::part1(input);
   let similarity_score = day1::part2(input);
@@ -31,8 +34,9 @@ fn day1() {
 fn day2() {
   spacer();
 
-  let _test_input = &day2::_read_test_input_file() as &str;
-  let input = &day2::read_input_file() as &str;
+  let day: u8 = 2;
+  let _test_input = &io::read_test_input_file(day) as &str;
+  let input = &io::read_input_file(day) as &str;
 
   let safe_reports_count = day2::part1(input);
   let dampened_safe_reports_count = day2::part2(input);
