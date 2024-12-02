@@ -36,13 +36,11 @@ fn validate_report_line(report_line: &Vec<u8>) -> bool {
 }
 
 fn apply_line_validation_dampener(report_line: &Vec<u8>) -> bool {
-  (0..report_line.len())
-    .map(|i| {
-      let mut report_line_clone = report_line.clone();
-      report_line_clone.remove(i);
-      validate_report_line(&mut report_line_clone)
-    })
-    .any(|x| x)
+  (0..report_line.len()).any(|i| {
+    let mut report_line_clone = report_line.clone();
+    report_line_clone.remove(i);
+    validate_report_line(&mut report_line_clone)
+  })
 }
 
 fn validate_report_line_with_dampener(report_line: &Vec<u8>) -> bool {
