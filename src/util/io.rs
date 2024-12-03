@@ -21,6 +21,12 @@ pub fn bench_spacer(env: Env) {
   println!("----------------- Benchmarks {:<4} ------------------", env.to_string());
 }
 
+pub fn get_day_inputs(day: u8) -> (String, String) {
+  let _test_input = read_test_input_file(day).to_string();
+  let input = read_input_file(day).to_string();
+  (_test_input, input)
+}
+
 fn get_input_file_name(day: u8, env: Env) -> String {
   match env {
     Env::Test => format!("input/test/day{:02}.txt", day),
@@ -33,10 +39,10 @@ fn read_file(file: String) -> String {
   return file_contents;
 }
 
-pub fn read_input_file(day: u8) -> String {
+fn read_input_file(day: u8) -> String {
   read_file(get_input_file_name(day, Env::Run))
 }
 
-pub fn read_test_input_file(day: u8) -> String {
+fn read_test_input_file(day: u8) -> String {
   read_file(get_input_file_name(day, Env::Test))
 }
