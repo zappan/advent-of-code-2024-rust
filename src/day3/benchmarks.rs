@@ -4,10 +4,13 @@ use super::*;
 
 #[derive(Debug)]
 enum BenchImpl {
-  Part1Regex,
   Part1Walkthrough,
-  Part2Regex,
+  Part1RegexParse,
+  Part1RegexCapture,
   Part2Walkthrough,
+  Part2RegexParse,
+  Part2RegexCapture,
+  Part2RegexPreprocessAndCapture,
 }
 
 fn run_benchmark(input: &str, fn_impl: BenchImpl) {
@@ -15,9 +18,13 @@ fn run_benchmark(input: &str, fn_impl: BenchImpl) {
 
   let now = std::time::Instant::now();
   let result = match fn_impl {
-    BenchImpl::Part1Regex => {
+    BenchImpl::Part1RegexParse => {
       let parsed_input = parse_input_regex(input, &matching_expr);
       let result = calculate_sum(&parsed_input, &matching_expr);
+      result
+    }
+    BenchImpl::Part1RegexCapture => {
+      let result = part1_regex_sum(&input);
       result
     }
     BenchImpl::Part1Walkthrough => {
@@ -25,10 +32,21 @@ fn run_benchmark(input: &str, fn_impl: BenchImpl) {
       let result = calculate_sum(&parsed_input, &matching_expr);
       result
     }
-    BenchImpl::Part2Regex => {
+    BenchImpl::Part2RegexParse => {
       let preprocessed_input = preprocessor::preprocess(input);
       let parsed_input = parse_input_regex(&preprocessed_input, &matching_expr);
       let result = calculate_sum(&parsed_input, &matching_expr);
+      result
+    }
+    BenchImpl::Part2RegexPreprocessAndCapture => {
+      let preprocessed_input = preprocessor::preprocess(input);
+      let parsed_input = parse_input_regex(&preprocessed_input, &matching_expr);
+      let parsed_input_2 = parsed_input.iter().map(|s| s.chars()).flatten().collect::<String>();
+      let result = part1_regex_sum(&parsed_input_2);
+      result
+    }
+    BenchImpl::Part2RegexCapture => {
+      let result = part2_regex_sum(&input);
       result
     }
     BenchImpl::Part2Walkthrough => {
@@ -45,7 +63,10 @@ fn run_benchmark(input: &str, fn_impl: BenchImpl) {
 pub fn run(input: &str, env: Env) {
   bench_spacer(env);
   run_benchmark(input, BenchImpl::Part1Walkthrough);
-  run_benchmark(input, BenchImpl::Part1Regex);
+  run_benchmark(input, BenchImpl::Part1RegexParse);
+  run_benchmark(input, BenchImpl::Part1RegexCapture);
   run_benchmark(input, BenchImpl::Part2Walkthrough);
-  run_benchmark(input, BenchImpl::Part2Regex);
+  run_benchmark(input, BenchImpl::Part2RegexParse);
+  run_benchmark(input, BenchImpl::Part2RegexCapture);
+  run_benchmark(input, BenchImpl::Part2RegexPreprocessAndCapture);
 }
