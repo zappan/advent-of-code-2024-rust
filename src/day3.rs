@@ -22,11 +22,11 @@ fn parse_input(input: &str) -> Vec<String> {
   parse_input_regex(input)
 }
 
-fn multiply(mul_expr: &str) -> u16 {
+fn multiply(mul_expr: &str) -> usize {
   let re = Regex::new(r"^mul\((\d+)\,(\d+)\)$").unwrap();
   let result = re.captures(mul_expr).unwrap();
-  let a = result.get(1).unwrap().as_str().parse::<u16>().unwrap();
-  let b = result.get(2).unwrap().as_str().parse::<u16>().unwrap();
+  let a = result.get(1).unwrap().as_str().parse::<usize>().unwrap();
+  let b = result.get(2).unwrap().as_str().parse::<usize>().unwrap();
   a * b
 }
 
