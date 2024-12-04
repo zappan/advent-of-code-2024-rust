@@ -50,8 +50,8 @@ fn day3() {
   let part1_result = day3::part1(&input);
   let part2_result = day3::part2(&input);
 
-  println!("[Day02::Part1] Part 1 Result => {part1_result}");
-  println!("[Day02::Part2] Part 2 Result => {part2_result}");
+  println!("[Day03::Part1] Part 1 Result => {part1_result}");
+  println!("[Day03::Part2] Part 2 Result => {part2_result}");
 
   day3::benchmarks::run(&input, io::Env::Run);
   day3::benchmarks::run(&_test_input, io::Env::Test);
