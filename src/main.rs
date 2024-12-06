@@ -2,13 +2,14 @@ use aoc_2024::day1;
 use aoc_2024::day2;
 use aoc_2024::day3;
 use aoc_2024::day4;
+use aoc_2024::day5;
 use aoc_2024::util::io;
 
 fn main() {
-  day4();
-  day3();
-  day2();
-  day1();
+  _day4();
+  _day3();
+  _day2();
+  _day1();
 }
 
 fn day_init(day: u8) -> (String, String) {
@@ -16,7 +17,7 @@ fn day_init(day: u8) -> (String, String) {
   io::get_day_inputs(day)
 }
 
-fn day1() {
+fn _day1() {
   let day: u8 = 1;
   let (_test_input, input) = day_init(day);
 
@@ -30,7 +31,7 @@ fn day1() {
   day1::benchmarks::run(&_test_input, io::Env::Test);
 }
 
-fn day2() {
+fn _day2() {
   let day: u8 = 2;
   let (_test_input, input) = day_init(day);
 
@@ -44,7 +45,7 @@ fn day2() {
   day2::benchmarks::run(&_test_input, io::Env::Test);
 }
 
-fn day3() {
+fn _day3() {
   let day: u8 = 3;
   let (_test_input, input) = day_init(day);
 
@@ -58,7 +59,7 @@ fn day3() {
   day3::benchmarks::run(&_test_input, io::Env::Test);
 }
 
-fn day4() {
+fn _day4() {
   let day: u8 = 4;
   let (_test_input, input) = day_init(day);
 
