@@ -6,6 +6,7 @@ use aoc_2024::day5;
 use aoc_2024::util::io;
 
 fn main() {
+  _day5();
   _day4();
   _day3();
   _day2();
@@ -71,4 +72,18 @@ fn _day4() {
 
   day4::benchmarks::run(&input, io::Env::Run);
   day4::benchmarks::run(&_test_input, io::Env::Test);
+}
+
+fn _day5() {
+  let day: u8 = 5;
+  let (_test_input, input) = day_init(day);
+
+  let part1_result = day5::part1(&input);
+  let part2_result = day5::part2(&input);
+
+  println!("[Day{day:02}::Part1] Part 1 Result => {part1_result}");
+  println!("[Day{day:02}::Part2] Part 2 Result => {part2_result}");
+
+  day5::benchmarks::run(&input, io::Env::Run);
+  day5::benchmarks::run(&_test_input, io::Env::Test);
 }
