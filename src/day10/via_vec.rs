@@ -1,9 +1,5 @@
 use itertools::Itertools;
 
-pub mod benchmarks;
-pub mod via_hashmap;
-pub mod via_vec;
-
 #[derive(Debug)]
 struct MapSize {
   x: usize,
@@ -34,14 +30,17 @@ fn get_trail_neighbouring_indices(tth_idx: usize, size: &MapSize) -> Vec<usize> 
 }
 
 fn find_next_trail_traversing_indices(topo_map: &Vec<u32>, map_size: &MapSize, tth_idx: usize) -> Vec<usize> {
-  let current_field = topo_map[tth_idx as usize];
+  let current_field = topo_map[tth_idx];
   let neighbouring_indices = get_trail_neighbouring_indices(tth_idx, &map_size);
 
   neighbouring_indices
     .into_iter()
     .map(|idx| (idx, topo_map[idx]))
+    // .inspect(|item| println!("ITEM: ({}, {})=>{:?}", tth_idx, topo_map[tth_idx], item))
     .filter(|&(_, map_field)| map_field == current_field + 1)
+    // .inspect(|item| println!("ITEM-2: ({}, {})=>{:?}", tth_idx, topo_map[tth_idx], item))
     .map(|(idx, _)| idx)
+    // .inspect(|item| println!("ITEM-3: {:?}", item))
     .collect::<Vec<usize>>()
 }
 
@@ -49,13 +48,17 @@ fn traverse_to_trailends(topo_map: &Vec<u32>, map_size: &MapSize, tth_idx: usize
   let tth = topo_map[tth_idx];
 
   if tth == 9 {
+    // println!("END-at-9: {}:{:?}", tth_idx, tth);
     return vec![(tth_idx, tth)];
   }
 
   let next_trail_traversing_indices = find_next_trail_traversing_indices(&topo_map, &map_size, tth_idx);
+
   next_trail_traversing_indices
     .into_iter()
+    // .inspect(|item| println!("NEXT_IDX: {:?}", item))
     .flat_map(|next_tth_idx| traverse_to_trailends(topo_map, map_size, next_tth_idx))
+    // .unique()
     .collect::<Vec<_>>()
 }
 

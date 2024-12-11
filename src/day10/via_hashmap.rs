@@ -1,8 +1,5 @@
 use itertools::Itertools;
-
-pub mod benchmarks;
-pub mod via_hashmap;
-pub mod via_vec;
+use std::collections::HashMap;
 
 #[derive(Debug)]
 struct MapSize {
@@ -33,45 +30,46 @@ fn get_trail_neighbouring_indices(tth_idx: usize, size: &MapSize) -> Vec<usize> 
   return neighbours;
 }
 
-fn find_next_trail_traversing_indices(topo_map: &Vec<u32>, map_size: &MapSize, tth_idx: usize) -> Vec<usize> {
-  let current_field = topo_map[tth_idx as usize];
+fn find_next_trail_traversing_indices(
+  topo_map: &HashMap<usize, u32>,
+  map_size: &MapSize,
+  tth_idx: usize,
+) -> Vec<usize> {
+  let current_field = topo_map[&tth_idx];
   let neighbouring_indices = get_trail_neighbouring_indices(tth_idx, &map_size);
 
   neighbouring_indices
     .into_iter()
-    .map(|idx| (idx, topo_map[idx]))
+    .map(|idx| (idx, topo_map[&idx]))
     .filter(|&(_, map_field)| map_field == current_field + 1)
     .map(|(idx, _)| idx)
     .collect::<Vec<usize>>()
 }
 
-fn traverse_to_trailends(topo_map: &Vec<u32>, map_size: &MapSize, tth_idx: usize) -> Vec<(usize, u32)> {
-  let tth = topo_map[tth_idx];
+fn traverse_to_trailends(topo_map: &HashMap<usize, u32>, map_size: &MapSize, tth_idx: usize) -> Vec<(usize, u32)> {
+  let tth = topo_map[&tth_idx];
 
   if tth == 9 {
     return vec![(tth_idx, tth)];
   }
 
   let next_trail_traversing_indices = find_next_trail_traversing_indices(&topo_map, &map_size, tth_idx);
+
   next_trail_traversing_indices
     .into_iter()
+    // .inspect(|item| println!("NEXT_IDX: {:?}", item))
     .flat_map(|next_tth_idx| traverse_to_trailends(topo_map, map_size, next_tth_idx))
     .collect::<Vec<_>>()
 }
 
-fn find_trails(topo_map: Vec<u32>, map_size: MapSize) -> Vec<((usize, u32), Vec<(usize, u32)>)> {
-  let trailheads: Vec<(usize, u32)> = topo_map
-    .clone()
-    .into_iter()
-    .enumerate()
-    .filter(|&(_, f)| f == 0)
-    .collect();
+fn find_trails(topo_map: HashMap<usize, u32>, map_size: MapSize) -> Vec<((usize, u32), Vec<(usize, u32)>)> {
+  let trailheads: HashMap<usize, u32> = topo_map.clone().into_iter().filter(|&(_, f)| f == 0).collect();
 
   let trails = trailheads
     .into_iter()
-    .map(|(tth_idx, _)| {
+    .map(|(tth_idx, field)| {
       let next_trail_fragments = traverse_to_trailends(&topo_map, &map_size, tth_idx);
-      return ((tth_idx, topo_map[tth_idx]), next_trail_fragments);
+      return ((tth_idx, field), next_trail_fragments);
     })
     .collect::<Vec<((usize, u32), Vec<(usize, u32)>)>>();
 
@@ -101,7 +99,7 @@ fn sum_trailheads_ratings(trailheads_ratings: Vec<((usize, u32), usize)>) -> usi
   trailheads_ratings.into_iter().map(|(_, score)| score).sum()
 }
 
-fn parse_input(input: &str) -> (MapSize, Vec<u32>) {
+fn parse_input(input: &str) -> (MapSize, HashMap<usize, u32>) {
   let rows_iter = input.lines().filter(|x| !x.is_empty());
 
   let map_size = MapSize {
@@ -109,20 +107,24 @@ fn parse_input(input: &str) -> (MapSize, Vec<u32>) {
     y: rows_iter.clone().count(),
   };
 
-  let topo_map = input
+  let map_len = map_size.x * map_size.y;
+  let mut topo_map: HashMap<usize, u32> = HashMap::with_capacity(map_len);
+  input
     .lines()
     .filter(|l| !l.is_empty())
-    .flat_map(|l| {
-      l.chars()
-        .map(|c| {
-          let d = c.to_digit(10).unwrap();
-          return d;
-        })
-        .collect::<Vec<u32>>()
-    })
-    .collect::<Vec<u32>>();
+    .enumerate()
+    .for_each(|(row_idx, l)| {
+      l.chars().enumerate().for_each(|(col_idx, c)| {
+        let k = row_idx * map_size.x + col_idx;
+        let v = c.to_digit(10).unwrap();
+        topo_map.insert(k, v);
+        // let v = ((row_idx, col_idx), d);
+        // println!("Row: {} Col: {} Idx: {} Val: {:?}", row_idx, col_idx, k, v);
+        // topo_map.insert(k, v);
+      })
+    });
 
-  (map_size, topo_map)
+  return (map_size, topo_map);
 }
 
 pub fn part1(input: &str) -> usize {
@@ -136,7 +138,7 @@ pub fn part1(input: &str) -> usize {
 pub fn part2(input: &str) -> usize {
   let (map_size, topo_map) = parse_input(input);
   let trails = find_trails(topo_map, map_size);
-  let trailheads_ratings = get_trailheads_ratings(trails);
-  let result = sum_trailheads_ratings(trailheads_ratings);
+  let trailheads_scores = get_trailheads_ratings(trails);
+  let result = sum_trailheads_ratings(trailheads_scores);
   result
 }
