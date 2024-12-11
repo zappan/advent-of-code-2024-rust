@@ -1,4 +1,5 @@
-use super::*;
+use crate::day10::via_hashmap;
+use crate::day10::via_vec;
 use crate::util::io::{bench_spacer, Env};
 
 #[derive(Debug)]

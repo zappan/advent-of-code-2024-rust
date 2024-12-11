@@ -57,7 +57,6 @@ fn traverse_to_trailends(topo_map: &HashMap<usize, u32>, map_size: &MapSize, tth
 
   next_trail_traversing_indices
     .into_iter()
-    // .inspect(|item| println!("NEXT_IDX: {:?}", item))
     .flat_map(|next_tth_idx| traverse_to_trailends(topo_map, map_size, next_tth_idx))
     .collect::<Vec<_>>()
 }
@@ -118,9 +117,6 @@ fn parse_input(input: &str) -> (MapSize, HashMap<usize, u32>) {
         let k = row_idx * map_size.x + col_idx;
         let v = c.to_digit(10).unwrap();
         topo_map.insert(k, v);
-        // let v = ((row_idx, col_idx), d);
-        // println!("Row: {} Col: {} Idx: {} Val: {:?}", row_idx, col_idx, k, v);
-        // topo_map.insert(k, v);
       })
     });
 
