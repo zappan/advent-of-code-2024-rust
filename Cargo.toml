@@ -10,3 +10,4 @@ path = "src/lib.rs"
 [dependencies]
 itertools = "0.13.0"
 regex = "1.11.1"
+statistical = "1.0.0"

@@ -2,6 +2,7 @@ use aoc_2024::day1;
 use aoc_2024::day10;
 use aoc_2024::day11;
 use aoc_2024::day13;
+use aoc_2024::day14;
 use aoc_2024::day2;
 use aoc_2024::day3;
 use aoc_2024::day4;
@@ -13,6 +14,7 @@ use aoc_2024::day9;
 use aoc_2024::util::io;
 
 fn main() {
+  _day14();
   _day13();
   _day11();
   _day10();
@@ -198,4 +200,18 @@ fn _day13() {
 
   day13::benchmarks::run(&_test_input, io::Env::Test);
   day13::benchmarks::run(&input, io::Env::Run);
+}
+
+fn _day14() {
+  let day: u8 = 14;
+  let (_test_input, input) = day_init(day);
+
+  let part1_result = day14::part1(&input);
+  let part2_result = day14::part2(&input);
+
+  println!("[Day{day:02}::Part1] Part 1 Result => {part1_result}");
+  println!("[Day{day:02}::Part2] Part 2 Result => {part2_result}");
+
+  day14::benchmarks::run(&_test_input, day14::Matrix { x: 11, y: 7 }, io::Env::Test);
+  day14::benchmarks::run(&input, day14::Matrix { x: 101, y: 103 }, io::Env::Run);
 }
