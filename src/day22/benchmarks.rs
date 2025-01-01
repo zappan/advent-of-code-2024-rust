@@ -4,6 +4,7 @@ use crate::util::io::{bench_spacer, Env};
 #[derive(Debug)]
 enum BenchImpl {
   Part1Std,
+  Part2Std,
 }
 
 fn run_benchmark(input: &str, fn_impl: BenchImpl) {
@@ -11,6 +12,10 @@ fn run_benchmark(input: &str, fn_impl: BenchImpl) {
   let result = match fn_impl {
     BenchImpl::Part1Std => {
       let result = part1(input);
+      result
+    }
+    BenchImpl::Part2Std => {
+      let result = part2(input);
       result
     }
   };
@@ -21,4 +26,5 @@ fn run_benchmark(input: &str, fn_impl: BenchImpl) {
 pub fn run(input: &str, env: Env) {
   bench_spacer(env);
   run_benchmark(input, BenchImpl::Part1Std);
+  run_benchmark(input, BenchImpl::Part2Std);
 }
